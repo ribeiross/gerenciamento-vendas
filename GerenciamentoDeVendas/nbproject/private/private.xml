@@ -5,6 +5,8 @@
         <group>
             <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/view/TelaControleUsuarios.java</file>
             <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/view/TelaCadastro.java</file>
+            <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/model/Cliente.java</file>
+            <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/model/Produto.java</file>
             <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/model/Usuario.java</file>
             <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/view/TelaLogin.java</file>
         </group>

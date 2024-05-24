@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package model;
 
 /**
@@ -9,5 +6,44 @@ package model;
  * @author Ribeiro
  */
 public class Cliente {
+    
+    public String nomeCliente;
+    private String clienteEndereco;
+    private long telefoneCliente;
+    
+    public Cliente() {
+        
+    }
+    
+    public Cliente(String nomeCliente, String clienteEndereco, long telefoneCliente) {
+        this.nomeCliente = nomeCliente;
+        this.clienteEndereco = clienteEndereco;
+        this.telefoneCliente = telefoneCliente;
+    }
+
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
+
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
+    }
+
+    public String getClienteEndereco() {
+        return clienteEndereco;
+    }
+
+    public void setClienteEndereco(String clienteEndereco) {
+        this.clienteEndereco = clienteEndereco;
+    }
+
+    public long getTelefoneCliente() {
+        return telefoneCliente;
+    }
+
+    public void setTelefoneCliente(long telefoneCliente) {
+        this.telefoneCliente = telefoneCliente;
+    }
+    
     
 }
