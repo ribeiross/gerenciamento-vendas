@@ -47,6 +47,11 @@ public class TelaAdmin extends javax.swing.JFrame {
 
         botaoProdutos.setContentAreaFilled(false);
         botaoProdutos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoProdutosActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoProdutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, 200, 30));
 
         botaoClientes.setContentAreaFilled(false);
@@ -60,6 +65,11 @@ public class TelaAdmin extends javax.swing.JFrame {
 
         botaoVendas.setContentAreaFilled(false);
         botaoVendas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoVendas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoVendasActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoVendas, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 390, 200, 30));
 
         botaoUsuarios.setContentAreaFilled(false);
@@ -83,8 +93,22 @@ public class TelaAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClientesActionPerformed
-        // TODO add your handling code here:
+        TelaClientes telaDeClientes = new TelaClientes();
+        telaDeClientes.show();
+        dispose();
     }//GEN-LAST:event_botaoClientesActionPerformed
+
+    private void botaoProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutosActionPerformed
+        TelaProdutos telaDeProdutos = new TelaProdutos();
+        telaDeProdutos.show();
+        dispose();
+    }//GEN-LAST:event_botaoProdutosActionPerformed
+
+    private void botaoVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVendasActionPerformed
+        TelaVendas telaDeVendas = new TelaVendas();
+        telaDeVendas.show();
+        dispose();
+    }//GEN-LAST:event_botaoVendasActionPerformed
 
     /**
      * @param args the command line arguments
