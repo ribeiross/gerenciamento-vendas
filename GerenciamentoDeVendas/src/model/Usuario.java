@@ -1,46 +1,48 @@
 
 package model;
 
-/**
- *
- * @author Ribeiro
- */
+
 public class Usuario {
-    private String nomeUsuario;
+    
+    private String nome;
     private String senha;
     private boolean isAdmin;
     
-    public Usuario() {
-    }
-    
-    public Usuario(String nomeUsuario, String senha, boolean isAdmin) {
-        this.nomeUsuario = nomeUsuario;
+    public Usuario(String nome, String senha, boolean isAdmin) {
+        this.nome = nome;
         this.senha = senha;
         this.isAdmin = isAdmin;
     }
-
-    public String getNomeUsuario() {
-        return nomeUsuario;
+    
+    public String getNome() {
+        return nome;
     }
-
-    public void setNomeUsuario(String nomeUsuario) {
-        this.nomeUsuario = nomeUsuario;
+    
+    public void setNome(String nome) {
+        this.nome = nome;
     }
-
+    
     public String getSenha() {
         return senha;
     }
-
+    
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-    public boolean isIsAdmin() {
+    
+    public boolean isAdmin() {
         return isAdmin;
     }
-
-    public void setIsAdmin(boolean isAdmin) {
+    
+    public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
     
+    public void exibirDetalhes() {
+        System.out.println("Nome: " + nome);
+        System.out.println("Admin: " + (isAdmin ? "Sim" : "Não"));
+        
+    }
+    
+
 }
