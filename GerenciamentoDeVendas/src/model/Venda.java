@@ -1,6 +1,6 @@
 
 package model;
-public class Vendas {
+public class Venda {
     
     private String produto;
     private int quantidade;
@@ -9,7 +9,7 @@ public class Vendas {
     
     
    //CONSTRUTOR 
-   public Vendas (String produto, int quantidade, String cliente, double valorUnitario) {
+   public Venda (String produto, int quantidade, String cliente, double valorUnitario) {
         this.produto = produto;
         this.quantidade = quantidade;
         this.cliente = cliente;
