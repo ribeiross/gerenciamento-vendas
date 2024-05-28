@@ -9,7 +9,7 @@ public class Produto {
     private double preco;
     private int quantidade;
 
-   
+   //CONSTRUTOR
     public Produto(int id, String nome, double preco, int quantidade) {
         this.id = id;
         this.nome = nome;
@@ -17,7 +17,7 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-   
+   //GETTERS E SETTERS
     public int getId() {
         return id;
     }

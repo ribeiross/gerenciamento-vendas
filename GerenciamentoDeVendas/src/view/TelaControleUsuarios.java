@@ -1,14 +1,10 @@
 
 package view;
 
-/**
- * @author Ribeiro
- */
+import javax.swing.table.DefaultTableModel;
+
 public class TelaControleUsuarios extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TelaLogin
-     */
     public TelaControleUsuarios() {
         initComponents();
     }
@@ -46,11 +42,16 @@ public class TelaControleUsuarios extends javax.swing.JFrame {
 
         botaoDeletarConta.setContentAreaFilled(false);
         botaoDeletarConta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoDeletarConta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoDeletarContaMouseClicked(evt);
+            }
+        });
         getContentPane().add(botaoDeletarConta, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 200, 250, 30));
 
         TabelaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {"Pedro", "12345"}
             },
             new String [] {
                 "Usuario", "Senha"
@@ -64,6 +65,7 @@ public class TelaControleUsuarios extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        TabelaUsuarios.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(TabelaUsuarios);
         if (TabelaUsuarios.getColumnModel().getColumnCount() > 0) {
             TabelaUsuarios.getColumnModel().getColumn(0).setResizable(false);
@@ -85,6 +87,9 @@ public class TelaControleUsuarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVoltarMouseClicked
+        //Comandos para retornar para a tela principal (Possibilidade de implementar um if/else que analisa
+        // a boolean isAdmin presente na classe AutenticacaoControle para decidir se vai retornar para o menu
+        // de um admin ou de um usuario comum do sistema)
         this.toBack();
         setVisible(false);
         TelaAdmin telaDeAdmin = new TelaAdmin();
@@ -92,6 +97,14 @@ public class TelaControleUsuarios extends javax.swing.JFrame {
         telaDeAdmin.toFront();
     }//GEN-LAST:event_botaoVoltarMouseClicked
 
+    private void botaoDeletarContaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoDeletarContaMouseClicked
+        //Remove a fileira de usuario (Implementar junto com o banco de dados posteriormente
+        // a função de ao apagar o usuario da tabela também o deletá-lo do banco de dados)
+        int fileiraSelecionada = TabelaUsuarios.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)TabelaUsuarios.getModel();
+        model.removeRow(fileiraSelecionada);
+    }//GEN-LAST:event_botaoDeletarContaMouseClicked
+    
     /**
      * @param args the command line arguments
      */

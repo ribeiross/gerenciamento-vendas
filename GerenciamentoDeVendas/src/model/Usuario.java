@@ -7,11 +7,13 @@ public class Usuario {
     private String nome;
     private String senha;
     
+    //CONSTRUTOR
     public Usuario(String nome, String senha) {
         this.nome = nome;
         this.senha = senha;
     }
     
+    //GETTERS E SETTERS
     public String getNome() {
         return nome;
     }

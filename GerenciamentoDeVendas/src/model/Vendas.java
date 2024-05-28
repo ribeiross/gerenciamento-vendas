@@ -8,7 +8,7 @@ public class Vendas {
     private double valorUnitario;
     
     
-    
+   //CONSTRUTOR 
    public Vendas (String produto, int quantidade, String cliente, double valorUnitario) {
         this.produto = produto;
         this.quantidade = quantidade;
@@ -16,7 +16,7 @@ public class Vendas {
         this.valorUnitario = valorUnitario;
     }
     
-   
+   //GETTERS E SETTERS
     public String getProduto() {
         return produto;
     }

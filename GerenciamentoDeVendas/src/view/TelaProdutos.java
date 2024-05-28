@@ -162,9 +162,12 @@ public class TelaProdutos extends javax.swing.JFrame {
     }//GEN-LAST:event_campoProdutoPrecoKeyTyped
 
     private void botaoAdicionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarMouseClicked
+        //Metodo para adicionar as informações presentes nos JtextField a tabela de Produtos
         DefaultTableModel model = (DefaultTableModel)TabelaProdutos.getModel();
         model.addRow(new Object[]{campoProdutoNome.getText(), campoProdutoID.getText(),
                                   campoProdutoPreco.getText(), campoProdutoQuantidade.getText()});
+        //Comandos para limpar os campos apos adicionar um produto (Alterar futuramente para tornar em um metodo
+        // presente em uma classe separada para tornar o codigo mais limpo)
         campoProdutoNome.setText(" ");
         campoProdutoID.setText(" ");
         campoProdutoPreco.setText(" ");
@@ -172,14 +175,18 @@ public class TelaProdutos extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoAdicionarMouseClicked
 
     private void botaoVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVoltarMouseClicked
+        //Comandos para retornar para a tela principal (Possibilidade de implementar um if/else que analisa
+        // a boolean isAdmin presente na classe AutenticacaoControle para decidir se vai retornar para o menu
+        // de um admin ou de um usuario comum do sistema)
         this.toBack();
         setVisible(false);
-        TelaUsuarios telaDeUsuarios = new TelaUsuarios();
-        telaDeUsuarios.setVisible(true);
-        telaDeUsuarios.toFront();
+        TelaAdmin telaDeAdmin = new TelaAdmin();
+        telaDeAdmin.setVisible(true);
+        telaDeAdmin.toFront();
     }//GEN-LAST:event_botaoVoltarMouseClicked
 
     private void TabelaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaProdutosMouseClicked
+        //Serve para ao selicionar uma fileira presente na tabela inserir as informações nos JTextFields
         int fileiraSelecionada = TabelaProdutos.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel)TabelaProdutos.getModel();
         campoProdutoNome.setText(model.getValueAt(fileiraSelecionada, 0).toString());
@@ -199,6 +206,8 @@ public class TelaProdutos extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Algo de Errado aconteceu");
         }
+        //Comandos para limpar os campos apos adicionar um produto (Alterar futuramente para tornar em um metodo
+        // presente em uma classe separada para tornar o codigo mais limpo)        
         campoProdutoNome.setText(" ");
         campoProdutoID.setText(" ");
         campoProdutoPreco.setText(" ");
@@ -206,9 +215,12 @@ public class TelaProdutos extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoAtualizarMouseClicked
 
     private void botaoRemoverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoRemoverMouseClicked
+        //Metodo para remover a fileira selecionada da tabela
         int fileiraSelecionada = TabelaProdutos.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel)TabelaProdutos.getModel();
         model.removeRow(fileiraSelecionada);
+        //Comandos para limpar os campos apos adicionar um produto (Alterar futuramente para tornar em um metodo
+        // presente em uma classe separada para tornar o codigo mais limpo)
         campoProdutoNome.setText(" ");
         campoProdutoID.setText(" ");
         campoProdutoPreco.setText(" ");

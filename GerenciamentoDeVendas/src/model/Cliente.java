@@ -11,6 +11,7 @@ public class Cliente {
     private String clienteEndereco;
     private long telefoneCliente;
     
+    //CONSTRUTORES
     public Cliente() {
         
     }
@@ -20,7 +21,8 @@ public class Cliente {
         this.clienteEndereco = clienteEndereco;
         this.telefoneCliente = telefoneCliente;
     }
-
+    
+    //GETTERS E SETTERS
     public String getNomeCliente() {
         return nomeCliente;
     }

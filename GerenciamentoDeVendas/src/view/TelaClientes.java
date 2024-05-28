@@ -134,17 +134,22 @@ public class TelaClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_campoTelefoneKeyTyped
 
     private void botaoVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVoltarMouseClicked
+        //Comandos para retornar para a tela principal (Possibilidade de implementar um if/else que analisa
+        // a boolean isAdmin presente na classe AutenticacaoControle para decidir se vai retornar para o menu
+        // de um admin ou de um usuario comum do sistema)
         this.toBack();
         setVisible(false);
-        TelaUsuarios telaDeUsuarios = new TelaUsuarios();
-        telaDeUsuarios.setVisible(true);
-        telaDeUsuarios.toFront();
+        TelaAdmin telaDeAdmin = new TelaAdmin();
+        telaDeAdmin.setVisible(true);
+        telaDeAdmin.toFront();
     }//GEN-LAST:event_botaoVoltarMouseClicked
 
     private void botaoAdicionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarMouseClicked
             DefaultTableModel model = (DefaultTableModel)TabelaClientes.getModel();
         model.addRow(new Object[]{campoClienteNome.getText(), campoEndereco.getText(),
                                   campoTelefone.getText()});
+        //Comandos para limpar os campos apos realizar a ação (Alterar futuramente para tornar em um metodo
+        // presente em uma classe separada para tornar o codigo mais limpo) 
         campoClienteNome.setText(" ");
         campoEndereco.setText(" ");
         campoTelefone.setText(" ");
@@ -160,6 +165,8 @@ public class TelaClientes extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Algo de Errado aconteceu");
         }
+        //Comandos para limpar os campos apos realizar a ação (Alterar futuramente para tornar em um metodo
+        // presente em uma classe separada para tornar o codigo mais limpo) 
         campoClienteNome.setText(" ");
         campoEndereco.setText(" ");
         campoTelefone.setText(" ");
@@ -169,6 +176,8 @@ public class TelaClientes extends javax.swing.JFrame {
         int fileiraSelecionada  = TabelaClientes.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel)TabelaClientes.getModel();
         model.removeRow(fileiraSelecionada);
+        //Comandos para limpar os campos apos realizar a ação (Alterar futuramente para tornar em um metodo
+        // presente em uma classe separada para tornar o codigo mais limpo) 
         campoClienteNome.setText(" ");
         campoEndereco.setText(" ");
         campoTelefone.setText(" ");

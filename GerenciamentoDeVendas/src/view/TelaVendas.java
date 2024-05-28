@@ -4,6 +4,9 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Ribeiro
@@ -47,18 +50,38 @@ public class TelaVendas extends javax.swing.JFrame {
 
         botaoVoltar.setContentAreaFilled(false);
         botaoVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoVoltarMouseClicked(evt);
+            }
+        });
         getContentPane().add(botaoVoltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 620, 100, 30));
 
         botaoRemover.setContentAreaFilled(false);
         botaoRemover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoRemover.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoRemoverMouseClicked(evt);
+            }
+        });
         getContentPane().add(botaoRemover, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 330, 230, 30));
 
         botaoAtualizar.setContentAreaFilled(false);
         botaoAtualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoAtualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoAtualizarMouseClicked(evt);
+            }
+        });
         getContentPane().add(botaoAtualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 260, 240, 40));
 
         botaoAdicionar.setContentAreaFilled(false);
         botaoAdicionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoAdicionar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoAdicionarMouseClicked(evt);
+            }
+        });
         getContentPane().add(botaoAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 200, 250, 30));
 
         campoProduto.setFont(new java.awt.Font("Gill Sans MT", 0, 18)); // NOI18N
@@ -149,6 +172,63 @@ public class TelaVendas extends javax.swing.JFrame {
         if(Character.isLetter(caracterProdutoPreco)&&!evt.isAltDown())
             evt.consume();
     }//GEN-LAST:event_campoTotalCompraKeyTyped
+
+    private void botaoVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVoltarMouseClicked
+        //Comandos para retornar para a tela principal (Possibilidade de implementar um if/else que analisa
+        // a boolean isAdmin presente na classe AutenticacaoControle para decidir se vai retornar para o menu
+        // de um admin ou de um usuario comum do sistema)
+        this.toBack();
+        setVisible(false);
+        TelaAdmin telaDeAdmin = new TelaAdmin();
+        telaDeAdmin.setVisible(true);
+        telaDeAdmin.toFront();
+    }//GEN-LAST:event_botaoVoltarMouseClicked
+
+    private void botaoAdicionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarMouseClicked
+        //Metodo para adicionar as informações presentes nos JtextField a tabela de Vendas
+        DefaultTableModel model = (DefaultTableModel)TabelaVendas.getModel();
+        model.addRow(new Object[]{campoProduto.getText(), campoCliente.getText(),
+                                  campoTotalCompra.getText(), campoProdutoQuantidade.getText()});
+        //Comandos para limpar os campos apos realizar a ação (Alterar futuramente para tornar em um metodo
+        // presente em uma classe separada para tornar o codigo mais limpo) 
+        campoProduto.setText(" ");
+        campoCliente.setText(" ");
+        campoTotalCompra.setText(" ");
+        campoProdutoQuantidade.setText(" ");
+    }//GEN-LAST:event_botaoAdicionarMouseClicked
+
+    private void botaoAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAtualizarMouseClicked
+        
+        int fileiraSelecionada  = TabelaVendas.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)TabelaVendas.getModel();
+        if (fileiraSelecionada >=0) {
+            model.setValueAt(campoProduto.getText(), fileiraSelecionada, 0);
+            model.setValueAt(campoCliente.getText(), fileiraSelecionada, 1);
+            model.setValueAt(campoTotalCompra.getText(), fileiraSelecionada, 2);
+            model.setValueAt(campoProdutoQuantidade.getText(), fileiraSelecionada, 3);
+        } else {
+            JOptionPane.showMessageDialog(null, "Algo de Errado aconteceu");
+        }
+        //Comandos para limpar os campos apos realizar a ação (Alterar futuramente para tornar em um metodo
+        // presente em uma classe separada para tornar o codigo mais limpo)        
+        campoProduto.setText(" ");
+        campoCliente.setText(" ");
+        campoTotalCompra.setText(" ");
+        campoProdutoQuantidade.setText(" ");
+    }//GEN-LAST:event_botaoAtualizarMouseClicked
+
+    private void botaoRemoverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoRemoverMouseClicked
+        //Metodo para remover a fileira selecionada da tabela
+        int fileiraSelecionada = TabelaVendas.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)TabelaVendas.getModel();
+        model.removeRow(fileiraSelecionada);
+        //Comandos para limpar os campos apos realizar a ação (Alterar futuramente para tornar em um metodo
+        // presente em uma classe separada para tornar o codigo mais limpo) 
+        campoProduto.setText(" ");
+        campoCliente.setText(" ");
+        campoTotalCompra.setText(" ");
+        campoProdutoQuantidade.setText(" ");
+    }//GEN-LAST:event_botaoRemoverMouseClicked
 
     /**
      * @param args the command line arguments

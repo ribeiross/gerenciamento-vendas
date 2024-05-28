@@ -59,6 +59,9 @@
           <Color id="Hand Cursor"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="botaoDeletarContaMouseClicked"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="1090" y="200" width="250" height="30"/>
@@ -80,9 +83,13 @@
         <Component class="javax.swing.JTable" name="TabelaUsuarios">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="2" rowCount="0">
-                <Column editable="true" title="Usuario" type="java.lang.String"/>
-                <Column editable="true" title="Senha" type="java.lang.String"/>
+              <Table columnCount="2" rowCount="1">
+                <Column editable="true" title="Usuario" type="java.lang.String">
+                  <Data value="Pedro"/>
+                </Column>
+                <Column editable="true" title="Senha" type="java.lang.String">
+                  <Data value="12345"/>
+                </Column>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -100,7 +107,7 @@
               </TableColumnModel>
             </Property>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+              <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
             </Property>
           </Properties>
         </Component>
