@@ -1,8 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package view;
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -47,18 +47,38 @@ public class TelaProdutos extends javax.swing.JFrame {
 
         botaoVoltar.setContentAreaFilled(false);
         botaoVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoVoltarMouseClicked(evt);
+            }
+        });
         getContentPane().add(botaoVoltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 620, 100, 30));
 
         botaoRemover.setContentAreaFilled(false);
         botaoRemover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoRemover.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoRemoverMouseClicked(evt);
+            }
+        });
         getContentPane().add(botaoRemover, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 330, 230, 30));
 
         botaoAtualizar.setContentAreaFilled(false);
         botaoAtualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoAtualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoAtualizarMouseClicked(evt);
+            }
+        });
         getContentPane().add(botaoAtualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 260, 240, 40));
 
         botaoAdicionar.setContentAreaFilled(false);
         botaoAdicionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoAdicionar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoAdicionarMouseClicked(evt);
+            }
+        });
         getContentPane().add(botaoAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 200, 250, 30));
 
         campoProdutoNome.setFont(new java.awt.Font("Gill Sans MT", 0, 18)); // NOI18N
@@ -90,37 +110,19 @@ public class TelaProdutos extends javax.swing.JFrame {
 
         TabelaProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Produto", "ID", "Preço (R$)", "Quantidade"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        ));
+        TabelaProdutos.getTableHeader().setReorderingAllowed(false);
+        TabelaProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelaProdutosMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(TabelaProdutos);
-        if (TabelaProdutos.getColumnModel().getColumnCount() > 0) {
-            TabelaProdutos.getColumnModel().getColumn(0).setResizable(false);
-            TabelaProdutos.getColumnModel().getColumn(1).setResizable(false);
-            TabelaProdutos.getColumnModel().getColumn(2).setResizable(false);
-            TabelaProdutos.getColumnModel().getColumn(3).setResizable(false);
-        }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 420, 700, 300));
 
@@ -157,6 +159,60 @@ public class TelaProdutos extends javax.swing.JFrame {
         if(Character.isLetter(caracterProdutoPreco)&&!evt.isAltDown())
             evt.consume();
     }//GEN-LAST:event_campoProdutoPrecoKeyTyped
+
+    private void botaoAdicionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarMouseClicked
+        DefaultTableModel model = (DefaultTableModel)TabelaProdutos.getModel();
+        model.addRow(new Object[]{campoProdutoNome.getText(), campoProdutoID.getText(),
+                                  campoProdutoPreco.getText(), campoProdutoQuantidade.getText()});
+        campoProdutoNome.setText(" ");
+        campoProdutoID.setText(" ");
+        campoProdutoPreco.setText(" ");
+        campoProdutoQuantidade.setText(" ");
+    }//GEN-LAST:event_botaoAdicionarMouseClicked
+
+    private void botaoVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVoltarMouseClicked
+        this.toBack();
+        setVisible(false);
+        TelaUsuarios telaDeUsuarios = new TelaUsuarios();
+        telaDeUsuarios.setVisible(true);
+        telaDeUsuarios.toFront();
+    }//GEN-LAST:event_botaoVoltarMouseClicked
+
+    private void TabelaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaProdutosMouseClicked
+        int fileiraSelecionada = TabelaProdutos.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)TabelaProdutos.getModel();
+        campoProdutoNome.setText(model.getValueAt(fileiraSelecionada, 0).toString());
+        campoProdutoID.setText(model.getValueAt(fileiraSelecionada, 1).toString());
+        campoProdutoPreco.setText(model.getValueAt(fileiraSelecionada, 2).toString());
+        campoProdutoQuantidade.setText(model.getValueAt(fileiraSelecionada, 3).toString());
+    }//GEN-LAST:event_TabelaProdutosMouseClicked
+
+    private void botaoAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAtualizarMouseClicked
+        int fileiraSelecionada  = TabelaProdutos.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)TabelaProdutos.getModel();
+        if (fileiraSelecionada >=0) {
+            model.setValueAt(campoProdutoNome.getText(), fileiraSelecionada, 0);
+            model.setValueAt(campoProdutoID.getText(), fileiraSelecionada, 1);
+            model.setValueAt(campoProdutoPreco.getText(), fileiraSelecionada, 2);
+            model.setValueAt(campoProdutoQuantidade.getText(), fileiraSelecionada, 3);
+        } else {
+            JOptionPane.showMessageDialog(null, "Algo de Errado aconteceu");
+        }
+        campoProdutoNome.setText(" ");
+        campoProdutoID.setText(" ");
+        campoProdutoPreco.setText(" ");
+        campoProdutoQuantidade.setText(" ");
+    }//GEN-LAST:event_botaoAtualizarMouseClicked
+
+    private void botaoRemoverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoRemoverMouseClicked
+        int fileiraSelecionada = TabelaProdutos.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)TabelaProdutos.getModel();
+        model.removeRow(fileiraSelecionada);
+        campoProdutoNome.setText(" ");
+        campoProdutoID.setText(" ");
+        campoProdutoPreco.setText(" ");
+        campoProdutoQuantidade.setText(" ");
+    }//GEN-LAST:event_botaoRemoverMouseClicked
 
     /**
      * @param args the command line arguments

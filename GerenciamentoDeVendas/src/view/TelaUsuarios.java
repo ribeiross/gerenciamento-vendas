@@ -89,9 +89,11 @@ public class TelaUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoClientesActionPerformed
 
     private void botaoProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutosActionPerformed
+        this.toBack();
+        setVisible(false);
         TelaProdutos telaDeProdutos = new TelaProdutos();
-        telaDeProdutos.show();
-        dispose();
+        telaDeProdutos.setVisible(true);
+        telaDeProdutos.toFront();
     }//GEN-LAST:event_botaoProdutosActionPerformed
 
     private void botaoVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVendasActionPerformed

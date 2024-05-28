@@ -1,8 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -31,7 +30,7 @@ public class TelaClientes extends javax.swing.JFrame {
         botaoRemover = new javax.swing.JButton();
         botaoAtualizar = new javax.swing.JButton();
         botaoAdicionar = new javax.swing.JToggleButton();
-        campoEndereço = new javax.swing.JTextField();
+        campoEndereco = new javax.swing.JTextField();
         campoClienteNome = new javax.swing.JTextField();
         campoTelefone = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -46,22 +45,42 @@ public class TelaClientes extends javax.swing.JFrame {
 
         botaoVoltar.setContentAreaFilled(false);
         botaoVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoVoltarMouseClicked(evt);
+            }
+        });
         getContentPane().add(botaoVoltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 620, 100, 30));
 
         botaoRemover.setContentAreaFilled(false);
         botaoRemover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoRemover.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoRemoverMouseClicked(evt);
+            }
+        });
         getContentPane().add(botaoRemover, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 330, 230, 30));
 
         botaoAtualizar.setContentAreaFilled(false);
         botaoAtualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoAtualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoAtualizarMouseClicked(evt);
+            }
+        });
         getContentPane().add(botaoAtualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 260, 240, 40));
 
         botaoAdicionar.setContentAreaFilled(false);
         botaoAdicionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoAdicionar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoAdicionarMouseClicked(evt);
+            }
+        });
         getContentPane().add(botaoAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 200, 250, 30));
 
-        campoEndereço.setFont(new java.awt.Font("Gill Sans MT", 0, 18)); // NOI18N
-        getContentPane().add(campoEndereço, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 240, 490, 40));
+        campoEndereco.setFont(new java.awt.Font("Gill Sans MT", 0, 18)); // NOI18N
+        getContentPane().add(campoEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 240, 490, 40));
 
         campoClienteNome.setFont(new java.awt.Font("Gill Sans MT", 0, 18)); // NOI18N
         getContentPane().add(campoClienteNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 190, 490, 40));
@@ -76,10 +95,7 @@ public class TelaClientes extends javax.swing.JFrame {
 
         TabelaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Nome", "Endereço", "Telefone"
@@ -88,24 +104,13 @@ public class TelaClientes extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
         });
+        TabelaClientes.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(TabelaClientes);
-        if (TabelaClientes.getColumnModel().getColumnCount() > 0) {
-            TabelaClientes.getColumnModel().getColumn(0).setResizable(false);
-            TabelaClientes.getColumnModel().getColumn(1).setResizable(false);
-            TabelaClientes.getColumnModel().getColumn(2).setResizable(false);
-        }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 420, 700, 300));
 
@@ -127,6 +132,47 @@ public class TelaClientes extends javax.swing.JFrame {
         if(!Character.isDigit(caracterProdutoQuantidade))
             evt.consume();
     }//GEN-LAST:event_campoTelefoneKeyTyped
+
+    private void botaoVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVoltarMouseClicked
+        this.toBack();
+        setVisible(false);
+        TelaUsuarios telaDeUsuarios = new TelaUsuarios();
+        telaDeUsuarios.setVisible(true);
+        telaDeUsuarios.toFront();
+    }//GEN-LAST:event_botaoVoltarMouseClicked
+
+    private void botaoAdicionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarMouseClicked
+            DefaultTableModel model = (DefaultTableModel)TabelaClientes.getModel();
+        model.addRow(new Object[]{campoClienteNome.getText(), campoEndereco.getText(),
+                                  campoTelefone.getText()});
+        campoClienteNome.setText(" ");
+        campoEndereco.setText(" ");
+        campoTelefone.setText(" ");
+    }//GEN-LAST:event_botaoAdicionarMouseClicked
+
+    private void botaoAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAtualizarMouseClicked
+        int fileiraSelecionada  = TabelaClientes.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)TabelaClientes.getModel();
+        if (fileiraSelecionada >=0) {
+            model.setValueAt(campoClienteNome.getText(), fileiraSelecionada, 0);
+            model.setValueAt(campoEndereco.getText(), fileiraSelecionada, 1);
+            model.setValueAt(campoTelefone.getText(), fileiraSelecionada, 2);
+        } else {
+            JOptionPane.showMessageDialog(null, "Algo de Errado aconteceu");
+        }
+        campoClienteNome.setText(" ");
+        campoEndereco.setText(" ");
+        campoTelefone.setText(" ");
+    }//GEN-LAST:event_botaoAtualizarMouseClicked
+
+    private void botaoRemoverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoRemoverMouseClicked
+        int fileiraSelecionada  = TabelaClientes.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)TabelaClientes.getModel();
+        model.removeRow(fileiraSelecionada);
+        campoClienteNome.setText(" ");
+        campoEndereco.setText(" ");
+        campoTelefone.setText(" ");
+    }//GEN-LAST:event_botaoRemoverMouseClicked
 
     /**
      * @param args the command line arguments
@@ -186,7 +232,7 @@ public class TelaClientes extends javax.swing.JFrame {
     private javax.swing.JButton botaoRemover;
     private javax.swing.JButton botaoVoltar;
     private javax.swing.JTextField campoClienteNome;
-    private javax.swing.JTextField campoEndereço;
+    private javax.swing.JTextField campoEndereco;
     private javax.swing.JTextField campoTelefone;
     private javax.swing.JLabel imagemClientes;
     private javax.swing.JScrollPane jScrollPane1;
