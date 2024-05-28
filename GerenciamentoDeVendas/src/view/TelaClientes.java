@@ -110,6 +110,11 @@ public class TelaClientes extends javax.swing.JFrame {
             }
         });
         TabelaClientes.getTableHeader().setReorderingAllowed(false);
+        TabelaClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelaClientesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(TabelaClientes);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 420, 700, 300));
@@ -182,6 +187,15 @@ public class TelaClientes extends javax.swing.JFrame {
         campoEndereco.setText(" ");
         campoTelefone.setText(" ");
     }//GEN-LAST:event_botaoRemoverMouseClicked
+
+    private void TabelaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaClientesMouseClicked
+        //Serve para ao selicionar uma fileira presente na tabela inserir as informações nos JTextFields
+        int fileiraSelecionada = TabelaClientes.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)TabelaClientes.getModel();
+        campoClienteNome.setText(model.getValueAt(fileiraSelecionada, 0).toString());
+        campoEndereco.setText(model.getValueAt(fileiraSelecionada, 1).toString());
+        campoTelefone.setText(model.getValueAt(fileiraSelecionada, 2).toString());
+    }//GEN-LAST:event_TabelaClientesMouseClicked
 
     /**
      * @param args the command line arguments

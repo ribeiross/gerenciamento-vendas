@@ -49,18 +49,11 @@ public class Venda {
         this.valorUnitario = valorUnitario;
     }
     
-    
-    public double calcularTotal() {
-        return quantidade * valorUnitario;
-    }
-    
-    
     public void exibirDetalhes() {
         System.out.println("Produto: " + produto);
         System.out.println("Quantidade: " + quantidade);
         System.out.println("Cliente: " + cliente);
         System.out.println("Valor unitário: " + valorUnitario);
-        System.out.println("Total da compra: " + calcularTotal());
     }
     
    

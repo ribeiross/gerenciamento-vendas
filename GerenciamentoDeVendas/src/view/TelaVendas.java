@@ -108,14 +108,7 @@ public class TelaVendas extends javax.swing.JFrame {
 
         TabelaVendas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Cliente", "Produto", "Quantidade", "Total Compra (R$)"
@@ -124,25 +117,18 @@ public class TelaVendas extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        });
+        TabelaVendas.getTableHeader().setReorderingAllowed(false);
+        TabelaVendas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelaVendasMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(TabelaVendas);
-        if (TabelaVendas.getColumnModel().getColumnCount() > 0) {
-            TabelaVendas.getColumnModel().getColumn(0).setResizable(false);
-            TabelaVendas.getColumnModel().getColumn(1).setResizable(false);
-            TabelaVendas.getColumnModel().getColumn(2).setResizable(false);
-            TabelaVendas.getColumnModel().getColumn(3).setResizable(false);
-        }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 420, 700, 300));
 
@@ -187,8 +173,8 @@ public class TelaVendas extends javax.swing.JFrame {
     private void botaoAdicionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarMouseClicked
         //Metodo para adicionar as informações presentes nos JtextField a tabela de Vendas
         DefaultTableModel model = (DefaultTableModel)TabelaVendas.getModel();
-        model.addRow(new Object[]{campoProduto.getText(), campoCliente.getText(),
-                                  campoTotalCompra.getText(), campoProdutoQuantidade.getText()});
+        model.addRow(new Object[]{campoCliente.getText(), campoProduto.getText(),
+                                  campoProdutoQuantidade.getText(), campoTotalCompra.getText()});
         //Comandos para limpar os campos apos realizar a ação (Alterar futuramente para tornar em um metodo
         // presente em uma classe separada para tornar o codigo mais limpo) 
         campoProduto.setText(" ");
@@ -202,10 +188,10 @@ public class TelaVendas extends javax.swing.JFrame {
         int fileiraSelecionada  = TabelaVendas.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel)TabelaVendas.getModel();
         if (fileiraSelecionada >=0) {
-            model.setValueAt(campoProduto.getText(), fileiraSelecionada, 0);
-            model.setValueAt(campoCliente.getText(), fileiraSelecionada, 1);
-            model.setValueAt(campoTotalCompra.getText(), fileiraSelecionada, 2);
-            model.setValueAt(campoProdutoQuantidade.getText(), fileiraSelecionada, 3);
+            model.setValueAt(campoCliente.getText(), fileiraSelecionada, 0);
+            model.setValueAt(campoProduto.getText(), fileiraSelecionada, 1);
+            model.setValueAt(campoProdutoQuantidade.getText(), fileiraSelecionada, 2);
+            model.setValueAt(campoTotalCompra.getText(), fileiraSelecionada, 3);
         } else {
             JOptionPane.showMessageDialog(null, "Algo de Errado aconteceu");
         }
@@ -229,6 +215,16 @@ public class TelaVendas extends javax.swing.JFrame {
         campoTotalCompra.setText(" ");
         campoProdutoQuantidade.setText(" ");
     }//GEN-LAST:event_botaoRemoverMouseClicked
+
+    private void TabelaVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaVendasMouseClicked
+        //Serve para ao selicionar uma fileira presente na tabela inserir as informações nos JTextFields
+        int fileiraSelecionada = TabelaVendas.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)TabelaVendas.getModel();
+        campoCliente.setText(model.getValueAt(fileiraSelecionada, 0).toString());
+        campoProduto.setText(model.getValueAt(fileiraSelecionada, 1).toString());
+        campoProdutoQuantidade.setText(model.getValueAt(fileiraSelecionada, 2).toString());
+        campoTotalCompra.setText(model.getValueAt(fileiraSelecionada, 3).toString());
+    }//GEN-LAST:event_TabelaVendasMouseClicked
 
     /**
      * @param args the command line arguments
