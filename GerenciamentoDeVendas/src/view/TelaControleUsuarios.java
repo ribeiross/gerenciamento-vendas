@@ -37,6 +37,11 @@ public class TelaControleUsuarios extends javax.swing.JFrame {
 
         botaoVoltar.setContentAreaFilled(false);
         botaoVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoVoltarMouseClicked(evt);
+            }
+        });
         getContentPane().add(botaoVoltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 620, 100, 30));
 
         botaoDeletarConta.setContentAreaFilled(false);
@@ -45,28 +50,14 @@ public class TelaControleUsuarios extends javax.swing.JFrame {
 
         TabelaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Usuario", "Cargo", "Senha"
+                "Usuario", "Senha"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -77,7 +68,6 @@ public class TelaControleUsuarios extends javax.swing.JFrame {
         if (TabelaUsuarios.getColumnModel().getColumnCount() > 0) {
             TabelaUsuarios.getColumnModel().getColumn(0).setResizable(false);
             TabelaUsuarios.getColumnModel().getColumn(1).setResizable(false);
-            TabelaUsuarios.getColumnModel().getColumn(2).setResizable(false);
         }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 190, 700, 530));
@@ -93,6 +83,14 @@ public class TelaControleUsuarios extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botaoVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVoltarMouseClicked
+        this.toBack();
+        setVisible(false);
+        TelaAdmin telaDeAdmin = new TelaAdmin();
+        telaDeAdmin.setVisible(true);
+        telaDeAdmin.toFront();
+    }//GEN-LAST:event_botaoVoltarMouseClicked
 
     /**
      * @param args the command line arguments

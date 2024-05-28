@@ -83,9 +83,11 @@ public class TelaUsuarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClientesActionPerformed
+        this.toBack();
+        setVisible(false);
         TelaClientes telaDeClientes = new TelaClientes();
-        telaDeClientes.show();
-        dispose();
+        telaDeClientes.setVisible(true);
+        telaDeClientes.toFront();
     }//GEN-LAST:event_botaoClientesActionPerformed
 
     private void botaoProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutosActionPerformed
@@ -97,9 +99,11 @@ public class TelaUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoProdutosActionPerformed
 
     private void botaoVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVendasActionPerformed
+        this.toBack();
+        setVisible(false);
         TelaVendas telaDeVendas = new TelaVendas();
-        telaDeVendas.show();
-        dispose();
+        telaDeVendas.setVisible(true);
+        telaDeVendas.toFront();
     }//GEN-LAST:event_botaoVendasActionPerformed
 
     /**

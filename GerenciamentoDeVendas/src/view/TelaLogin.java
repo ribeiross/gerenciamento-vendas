@@ -1,15 +1,13 @@
 
 package view;
 
-/**
- * @author Ribeiro
- */
+import controller.AutenticacaoControle;
+import javax.swing.JOptionPane;
 public class TelaLogin extends javax.swing.JFrame {
-
-    /**
-     * Creates new form TelaLogin
-     */
+    private AutenticacaoControle controller;
+    
     public TelaLogin() {
+        controller = new AutenticacaoControle();
         initComponents();
     }
 
@@ -24,6 +22,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
         usuarioLogin = new javax.swing.JTextField();
         senhaLogin = new javax.swing.JPasswordField();
+        botaoCadastrar = new javax.swing.JButton();
         botaoConectar = new javax.swing.JButton();
         imagemLogin = new javax.swing.JLabel();
 
@@ -43,8 +42,22 @@ public class TelaLogin extends javax.swing.JFrame {
         senhaLogin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         getContentPane().add(senhaLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 510, 400, 40));
 
+        botaoCadastrar.setContentAreaFilled(false);
+        botaoCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoCadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoCadastrarMouseClicked(evt);
+            }
+        });
+        getContentPane().add(botaoCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 600, 180, 30));
+
         botaoConectar.setContentAreaFilled(false);
         botaoConectar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoConectar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoConectarMouseClicked(evt);
+            }
+        });
         getContentPane().add(botaoConectar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 600, 180, 30));
 
         imagemLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Tela Login.jpeg"))); // NOI18N
@@ -59,6 +72,34 @@ public class TelaLogin extends javax.swing.JFrame {
     private void usuarioLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarioLoginActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_usuarioLoginActionPerformed
+
+    private void botaoConectarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoConectarMouseClicked
+       String nome = usuarioLogin.getText();
+       String senha = new String(senhaLogin.getPassword());
+       if (nome.equals("admin") && senha.equals("admin")) {
+           this.toBack();
+           setVisible(false);
+           TelaAdmin telaDeAdmin = new TelaAdmin();
+           telaDeAdmin.setVisible(true);
+           telaDeAdmin.toFront();
+       } else if (controller.autenticarUsuario(nome, senha)) {
+           this.toBack();
+           setVisible(false);
+           TelaUsuarios telaDeUsuario = new TelaUsuarios();
+           telaDeUsuario.setVisible(true);
+           telaDeUsuario.toFront();   
+       } else {
+           JOptionPane.showMessageDialog(null, "USUÁRIO NÃO CADASTRADO");
+       }
+    }//GEN-LAST:event_botaoConectarMouseClicked
+
+    private void botaoCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoCadastrarMouseClicked
+           this.toBack();
+           setVisible(false);
+           TelaCadastro telaDeCadastro = new TelaCadastro();
+           telaDeCadastro.setVisible(true);
+           telaDeCadastro.toFront();
+    }//GEN-LAST:event_botaoCadastrarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -96,6 +137,7 @@ public class TelaLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoCadastrar;
     private javax.swing.JButton botaoConectar;
     private javax.swing.JLabel imagemLogin;
     private javax.swing.JPasswordField senhaLogin;

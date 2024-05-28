@@ -6,12 +6,10 @@ public class Usuario {
     
     private String nome;
     private String senha;
-    private boolean isAdmin;
     
-    public Usuario(String nome, String senha, boolean isAdmin) {
+    public Usuario(String nome, String senha) {
         this.nome = nome;
         this.senha = senha;
-        this.isAdmin = isAdmin;
     }
     
     public String getNome() {
@@ -29,20 +27,11 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-    
-    public void setAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
-    }
-    
+
     public void exibirDetalhes() {
         System.out.println("Nome: " + nome);
-        System.out.println("Admin: " + (isAdmin ? "Sim" : "Não"));
         
-    }
+        }
     
 
 }

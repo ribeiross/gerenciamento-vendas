@@ -1,16 +1,16 @@
 
 package view;
 
-/**
- *
- * @author Ribeiro
- */
+import controller.AutenticacaoControle;
+
 public class TelaCadastro extends javax.swing.JFrame {
+    private AutenticacaoControle controller;
 
     /**
      * Creates new form TelaLogin
      */
     public TelaCadastro() {
+        controller = new AutenticacaoControle();
         initComponents();
     }
 
@@ -23,13 +23,9 @@ public class TelaCadastro extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        MarcadoresCadastro = new javax.swing.ButtonGroup();
         usuarioCadastro = new javax.swing.JTextField();
         senhaCadastro = new javax.swing.JTextField();
-        senhaRepetirCadastro = new javax.swing.JTextField();
         botaoConcluirCadastro = new javax.swing.JButton();
-        marcarAdmin = new javax.swing.JCheckBox();
-        marcarFuncionario = new javax.swing.JCheckBox();
         imagemCadastro = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -43,7 +39,7 @@ public class TelaCadastro extends javax.swing.JFrame {
                 usuarioCadastroActionPerformed(evt);
             }
         });
-        getContentPane().add(usuarioCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 540, 400, 40));
+        getContentPane().add(usuarioCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 380, 400, 40));
 
         senhaCadastro.setFont(new java.awt.Font("Gill Sans MT", 0, 24)); // NOI18N
         senhaCadastro.addActionListener(new java.awt.event.ActionListener() {
@@ -51,29 +47,18 @@ public class TelaCadastro extends javax.swing.JFrame {
                 senhaCadastroActionPerformed(evt);
             }
         });
-        getContentPane().add(senhaCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 290, 400, 40));
-
-        senhaRepetirCadastro.setFont(new java.awt.Font("Gill Sans MT", 0, 24)); // NOI18N
-        senhaRepetirCadastro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                senhaRepetirCadastroActionPerformed(evt);
-            }
-        });
-        getContentPane().add(senhaRepetirCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 410, 400, 40));
+        getContentPane().add(senhaCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 510, 400, 40));
 
         botaoConcluirCadastro.setContentAreaFilled(false);
         botaoConcluirCadastro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        getContentPane().add(botaoConcluirCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 690, 180, 30));
+        botaoConcluirCadastro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoConcluirCadastroMouseClicked(evt);
+            }
+        });
+        getContentPane().add(botaoConcluirCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 600, 180, 30));
 
-        MarcadoresCadastro.add(marcarAdmin);
-        marcarAdmin.setContentAreaFilled(false);
-        getContentPane().add(marcarAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 650, -1, 30));
-
-        MarcadoresCadastro.add(marcarFuncionario);
-        marcarFuncionario.setContentAreaFilled(false);
-        getContentPane().add(marcarFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 610, -1, -1));
-
-        imagemCadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/TelaCadastro.jpg"))); // NOI18N
+        imagemCadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/TelaCadastro.jpeg"))); // NOI18N
         imagemCadastro.setMaximumSize(new java.awt.Dimension(1280, 720));
         imagemCadastro.setMinimumSize(new java.awt.Dimension(1280, 720));
         getContentPane().add(imagemCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1533, 887));
@@ -90,9 +75,17 @@ public class TelaCadastro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_senhaCadastroActionPerformed
 
-    private void senhaRepetirCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_senhaRepetirCadastroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_senhaRepetirCadastroActionPerformed
+    private void botaoConcluirCadastroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoConcluirCadastroMouseClicked
+        String nome = usuarioCadastro.getText();
+        String senha = senhaCadastro.getText();
+        controller.cadastrarUsuario(nome, senha);
+        
+        this.toBack();
+        setVisible(false);
+        TelaLogin telaDeLogin = new TelaLogin();
+        telaDeLogin.setVisible(true);
+        telaDeLogin.toFront();
+    }//GEN-LAST:event_botaoConcluirCadastroMouseClicked
 
     /**
      * @param args the command line arguments
@@ -131,13 +124,9 @@ public class TelaCadastro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup MarcadoresCadastro;
     private javax.swing.JButton botaoConcluirCadastro;
     private javax.swing.JLabel imagemCadastro;
-    private javax.swing.JCheckBox marcarAdmin;
-    private javax.swing.JCheckBox marcarFuncionario;
     private javax.swing.JTextField senhaCadastro;
-    private javax.swing.JTextField senhaRepetirCadastro;
     private javax.swing.JTextField usuarioCadastro;
     // End of variables declaration//GEN-END:variables
 }
