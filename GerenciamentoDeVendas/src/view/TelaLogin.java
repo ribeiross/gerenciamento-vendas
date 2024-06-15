@@ -70,9 +70,8 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void usuarioLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarioLoginActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usuarioLoginActionPerformed
 
+    }//GEN-LAST:event_usuarioLoginActionPerformed
     private void botaoConectarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoConectarMouseClicked
        String nome = usuarioLogin.getText();
        String senha = new String(senhaLogin.getPassword());
