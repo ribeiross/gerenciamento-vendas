@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/view/TelaControleUsuarios.java</file>
             <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/view/TelaProdutos.java</file>
             <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/view/TelaCadastro.java</file>
@@ -13,6 +14,10 @@
             <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/controller/VendasControle.java</file>
             <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/controller/AutenticacaoDB.java</file>
             <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/view/TelaLogin.java</file>
+=======
+            <file>file:/C:/Users/gabri/Documents/PROEJTO%20A3%20PROGRMAÇÃO/gerenciamento-vendas/GerenciamentoDeVendas/src/view/TelaLogin.java</file>
+            <file>file:/C:/Users/gabri/Documents/PROEJTO%20A3%20PROGRMAÇÃO/gerenciamento-vendas/GerenciamentoDeVendas/src/model/Conexao.java</file>
+>>>>>>> 690749f1d46a5edb9591ee80b5e98f96aa3a33c4
         </group>
     </open-files>
 </project-private>
