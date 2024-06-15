@@ -1,16 +1,19 @@
 
 package view;
 
+import controller.AutenticacaoDB;
 import controller.AutenticacaoControle;
+import javax.swing.JTextField;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 public class TelaCadastro extends javax.swing.JFrame {
-    private AutenticacaoControle controller;
+    private AutenticacaoDB controller;
 
     /**
      * Creates new form TelaLogin
      */
     public TelaCadastro() {
-        controller = new AutenticacaoControle();
         initComponents();
     }
 
@@ -76,17 +79,39 @@ public class TelaCadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_senhaCadastroActionPerformed
 
     private void botaoConcluirCadastroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoConcluirCadastroMouseClicked
-        String nome = usuarioCadastro.getText();
-        String senha = senhaCadastro.getText();
-        controller.cadastrarUsuario(nome, senha);
-        
+       if(usuarioCadastro.getText().matches("") || senhaCadastro.getText().matches("")) {
+           JOptionPane.showMessageDialog(rootPane, "Prencha todos os campos");
+       } else {
+        try {
+        AutenticacaoControle cadastro = new AutenticacaoControle();
+       cadastro.cadastroUsuario(this);
+       } catch (SQLException sql) {
+           
+       }
         this.toBack();
         setVisible(false);
         TelaLogin telaDeLogin = new TelaLogin();
         telaDeLogin.setVisible(true);
         telaDeLogin.toFront();
+       }
     }//GEN-LAST:event_botaoConcluirCadastroMouseClicked
 
+    public JTextField getSenhaCadastro() {
+        return senhaCadastro;
+    }
+
+    public void setSenhaCadastro(JTextField senhaCadastro) {
+        this.senhaCadastro = senhaCadastro;
+    }
+
+    public JTextField getUsuarioCadastro() {
+        return usuarioCadastro;
+    }
+
+    public void setUsuarioCadastro(JTextField usuarioCadastro) {
+        this.usuarioCadastro = usuarioCadastro;
+    }
+    
     /**
      * @param args the command line arguments
      */

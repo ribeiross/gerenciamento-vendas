@@ -1,13 +1,16 @@
 
 package view;
 
+import java.sql.SQLException;
 import controller.AutenticacaoControle;
+import controller.AutenticacaoDB;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 public class TelaLogin extends javax.swing.JFrame {
-    private AutenticacaoControle controller;
+    private AutenticacaoDB controller;
     
     public TelaLogin() {
-        controller = new AutenticacaoControle();
         initComponents();
     }
 
@@ -74,23 +77,27 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_usuarioLoginActionPerformed
 
     private void botaoConectarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoConectarMouseClicked
-       String nome = usuarioLogin.getText();
-       String senha = new String(senhaLogin.getPassword());
-       if (nome.equals("admin") && senha.equals("admin")) {
-           this.toBack();
-           setVisible(false);
-           TelaAdmin telaDeAdmin = new TelaAdmin();
-           telaDeAdmin.setVisible(true);
-           telaDeAdmin.toFront();
-       } else if (controller.autenticarUsuario(nome, senha)) {
-           this.toBack();
-           setVisible(false);
-           TelaUsuarios telaDeUsuario = new TelaUsuarios();
-           telaDeUsuario.setVisible(true);
-           telaDeUsuario.toFront();   
+
+        if(usuarioLogin.getText().matches("") || senhaLogin.getText().matches("")) {
+           JOptionPane.showMessageDialog(rootPane, "Prencha todos os campos");
+       } else if (usuarioLogin.getText().matches("admin") || senhaLogin.getText().matches("admin")) {
+        setVisible(false);
+        TelaAdmin telaDeAdmin = new TelaAdmin();
+        telaDeAdmin.setVisible(true);
+        telaDeAdmin.toFront();
        } else {
-           JOptionPane.showMessageDialog(null, "USUÁRIO NÃO CADASTRADO");
-       }
+        try {
+        AutenticacaoControle login = new AutenticacaoControle();
+           login.loginUsuario(this);
+    } catch (SQLException sql) {
+        
+            }
+        this.toBack();
+        setVisible(false);
+        TelaUsuarios telaDeUsuario = new TelaUsuarios();
+        telaDeUsuario.setVisible(true);
+        telaDeUsuario.toFront();
+       }  
     }//GEN-LAST:event_botaoConectarMouseClicked
 
     private void botaoCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoCadastrarMouseClicked
@@ -100,6 +107,22 @@ public class TelaLogin extends javax.swing.JFrame {
            telaDeCadastro.setVisible(true);
            telaDeCadastro.toFront();
     }//GEN-LAST:event_botaoCadastrarMouseClicked
+
+    public JPasswordField getSenhaLogin() {
+        return senhaLogin;
+    }
+
+    public void setSenhaLogin(JPasswordField senhaLogin) {
+        this.senhaLogin = senhaLogin;
+    }
+
+    public JTextField getUsuarioLogin() {
+        return usuarioLogin;
+    }
+
+    public void setUsuarioLogin(JTextField usuarioLogin) {
+        this.usuarioLogin = usuarioLogin;
+    }
 
     /**
      * @param args the command line arguments

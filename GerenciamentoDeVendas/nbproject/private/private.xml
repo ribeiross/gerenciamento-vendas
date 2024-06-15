@@ -6,12 +6,12 @@
             <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/view/TelaControleUsuarios.java</file>
             <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/view/TelaProdutos.java</file>
             <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/view/TelaCadastro.java</file>
-            <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/view/TelaAdmin.java</file>
-            <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/model/Produto.java</file>
-            <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/model/Cliente.java</file>
+            <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/controller/ConexaoDB.java</file>
             <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/controller/AutenticacaoControle.java</file>
+            <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/model/Venda.java</file>
             <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/model/Usuario.java</file>
-            <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/model/Vendas.java</file>
+            <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/controller/VendasControle.java</file>
+            <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/controller/AutenticacaoDB.java</file>
             <file>file:/H:/Arquivos/Documents/NetBeansProjects/GerenciamentoDeVendas/src/view/TelaLogin.java</file>
         </group>
     </open-files>
