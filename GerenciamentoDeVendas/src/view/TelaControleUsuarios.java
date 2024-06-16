@@ -6,6 +6,7 @@ import controller.TabelaUsuarioControle;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.Usuario;
@@ -59,7 +60,12 @@ public class TelaControleUsuarios extends javax.swing.JFrame {
                 botaoDeletarContaMouseClicked(evt);
             }
         });
-        getContentPane().add(botaoDeletarConta, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 200, 250, 30));
+        botaoDeletarConta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoDeletarContaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoDeletarConta, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 190, 250, 50));
 
         TabelaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -113,11 +119,27 @@ public class TelaControleUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoVoltarMouseClicked
 
     private void botaoDeletarContaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoDeletarContaMouseClicked
-        //Remove a fileira de usuario (Implementar junto com o banco de dados posteriormente
-        // a função de ao apagar o usuario da tabela também o deletá-lo do banco de dados)
+        //Remove a fileira de usuario da tabela e também o deleta ela do banco de dados)
         int fileiraSelecionada = TabelaUsuarios.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel)TabelaUsuarios.getModel();
-        model.removeRow(fileiraSelecionada);
+        if (fileiraSelecionada >= 0) {
+            try {
+                DefaultTableModel tabela = (DefaultTableModel) TabelaUsuarios.getModel();
+                String nome = tabela.getValueAt(fileiraSelecionada, 0).toString();
+                String senha = tabela.getValueAt(fileiraSelecionada, 1).toString();
+                TabelaUsuarioControle controle = new TabelaUsuarioControle();
+                boolean deletado = controle.removerUsuario(nome, senha);
+                
+                if (deletado) {
+                    tabela.removeRow(fileiraSelecionada);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao deletar usuário."); 
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(TelaControleUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+                JOptionPane.showMessageDialog(this, "Selecione uma fileira para deletar.");
+            }
     }//GEN-LAST:event_botaoDeletarContaMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -131,6 +153,10 @@ public class TelaControleUsuarios extends javax.swing.JFrame {
     private void TabelaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaUsuariosMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_TabelaUsuariosMouseClicked
+
+    private void botaoDeletarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDeletarContaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoDeletarContaActionPerformed
 
         public void mostrarUsuario() throws SQLException {
         TabelaUsuarioControle controle = new TabelaUsuarioControle();    
