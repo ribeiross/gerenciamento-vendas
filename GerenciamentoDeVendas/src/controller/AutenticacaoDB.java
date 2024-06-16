@@ -22,6 +22,7 @@ public class AutenticacaoDB {
         Connection conexao = new ConexaoDB().conectar();
         PreparedStatement stmt = conexao.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
+        rs.last();
         conexao.close();
         
     }    

@@ -1,7 +1,14 @@
 
 package view;
 
+import java.sql.SQLException;
+import controller.TabelaUsuarioControle;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import model.Usuario;
 
 public class TelaControleUsuarios extends javax.swing.JFrame {
 
@@ -29,6 +36,11 @@ public class TelaControleUsuarios extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1533, 887));
         setResizable(false);
         setSize(new java.awt.Dimension(1280, 720));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoVoltar.setContentAreaFilled(false);
@@ -51,7 +63,7 @@ public class TelaControleUsuarios extends javax.swing.JFrame {
 
         TabelaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Pedro", "12345"}
+
             },
             new String [] {
                 "Usuario", "Senha"
@@ -66,6 +78,11 @@ public class TelaControleUsuarios extends javax.swing.JFrame {
             }
         });
         TabelaUsuarios.getTableHeader().setReorderingAllowed(false);
+        TabelaUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelaUsuariosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(TabelaUsuarios);
         if (TabelaUsuarios.getColumnModel().getColumnCount() > 0) {
             TabelaUsuarios.getColumnModel().getColumn(0).setResizable(false);
@@ -87,9 +104,7 @@ public class TelaControleUsuarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVoltarMouseClicked
-        //Comandos para retornar para a tela principal (Possibilidade de implementar um if/else que analisa
-        // a boolean isAdmin presente na classe AutenticacaoControle para decidir se vai retornar para o menu
-        // de um admin ou de um usuario comum do sistema)
+        //Comandos para retornar para a tela principal de admin
         this.toBack();
         setVisible(false);
         TelaAdmin telaDeAdmin = new TelaAdmin();
@@ -104,7 +119,39 @@ public class TelaControleUsuarios extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel)TabelaUsuarios.getModel();
         model.removeRow(fileiraSelecionada);
     }//GEN-LAST:event_botaoDeletarContaMouseClicked
-    
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            mostrarUsuario();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaControleUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void TabelaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaUsuariosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TabelaUsuariosMouseClicked
+
+        public void mostrarUsuario() throws SQLException {
+        TabelaUsuarioControle controle = new TabelaUsuarioControle();    
+        ArrayList<Usuario> lista = controle.listaUsuarios();
+        DefaultTableModel tabelaUsuarios = (DefaultTableModel)TabelaUsuarios.getModel();
+        Object [] fileira = new Object [2];
+        for (int i = 0; i<lista.size();i++) {
+            fileira[0] = lista.get(i).getNome();
+            fileira[1] = lista.get(i).getSenha();
+            tabelaUsuarios.addRow(fileira);
+        }
+        
+    }
+    public JTable getTabelaUsuarios() {
+        return TabelaUsuarios;
+    }
+
+    public void setTabelaUsuarios(JTable TabelaUsuarios) {
+        this.TabelaUsuarios = TabelaUsuarios;
+    }
+
     /**
      * @param args the command line arguments
      */
