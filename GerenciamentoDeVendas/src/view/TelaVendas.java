@@ -1,11 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package view;
 
+import controller.VendasControle;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import model.Venda;
 
 /**
  *
@@ -46,6 +51,11 @@ public class TelaVendas extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1533, 887));
         setResizable(false);
         setSize(new java.awt.Dimension(1280, 720));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoVoltar.setContentAreaFilled(false);
@@ -171,49 +181,55 @@ public class TelaVendas extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoVoltarMouseClicked
 
     private void botaoAdicionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarMouseClicked
-        //Metodo para adicionar as informações presentes nos JtextField a tabela de Vendas
-        DefaultTableModel model = (DefaultTableModel)TabelaVendas.getModel();
-        model.addRow(new Object[]{campoCliente.getText(), campoProduto.getText(),
-                                  campoProdutoQuantidade.getText(), campoTotalCompra.getText()});
-        //Comandos para limpar os campos apos realizar a ação (Alterar futuramente para tornar em um metodo
-        // presente em uma classe separada para tornar o codigo mais limpo) 
-        campoProduto.setText(" ");
-        campoCliente.setText(" ");
-        campoTotalCompra.setText(" ");
-        campoProdutoQuantidade.setText(" ");
+        if (campoCliente.getText() != "" || campoProduto.getText() != "" || campoProdutoQuantidade.getText() != "" || campoTotalCompra.getText() != "") {
+            VendasControle controle = new VendasControle();
+            controle.adicionarVenda(this);
+            //Comandos para limpar os campos apos realizar a ação 
+            limparCampos();
+        } else {
+            JOptionPane.showMessageDialog(null, "Preencha os campos!");
+        }
     }//GEN-LAST:event_botaoAdicionarMouseClicked
 
     private void botaoAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAtualizarMouseClicked
-        
         int fileiraSelecionada  = TabelaVendas.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel)TabelaVendas.getModel();
+        DefaultTableModel tabela = (DefaultTableModel)TabelaVendas.getModel();
         if (fileiraSelecionada >=0) {
-            model.setValueAt(campoCliente.getText(), fileiraSelecionada, 0);
-            model.setValueAt(campoProduto.getText(), fileiraSelecionada, 1);
-            model.setValueAt(campoProdutoQuantidade.getText(), fileiraSelecionada, 2);
-            model.setValueAt(campoTotalCompra.getText(), fileiraSelecionada, 3);
+            VendasControle controle = new VendasControle();
+            controle.atualizarVenda(this);
         } else {
             JOptionPane.showMessageDialog(null, "Algo de Errado aconteceu");
         }
-        //Comandos para limpar os campos apos realizar a ação (Alterar futuramente para tornar em um metodo
-        // presente em uma classe separada para tornar o codigo mais limpo)        
-        campoProduto.setText(" ");
-        campoCliente.setText(" ");
-        campoTotalCompra.setText(" ");
-        campoProdutoQuantidade.setText(" ");
+        //Comandos para limpar os campos apos realizar a ação 
+        limparCampos();
     }//GEN-LAST:event_botaoAtualizarMouseClicked
 
     private void botaoRemoverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoRemoverMouseClicked
-        //Metodo para remover a fileira selecionada da tabela
+        //Remove a fileira de venda da tabela e também o deleta ela do banco de dados)
         int fileiraSelecionada = TabelaVendas.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel)TabelaVendas.getModel();
-        model.removeRow(fileiraSelecionada);
-        //Comandos para limpar os campos apos realizar a ação (Alterar futuramente para tornar em um metodo
-        // presente em uma classe separada para tornar o codigo mais limpo) 
-        campoProduto.setText(" ");
-        campoCliente.setText(" ");
-        campoTotalCompra.setText(" ");
-        campoProdutoQuantidade.setText(" ");
+        if (fileiraSelecionada >= 0) {
+            try {
+                DefaultTableModel tabela = (DefaultTableModel) TabelaVendas.getModel();
+                String cliente = tabela.getValueAt(fileiraSelecionada, 0).toString();
+                String produto = tabela.getValueAt(fileiraSelecionada, 1).toString();
+                int quantidade = Integer.parseInt(tabela.getValueAt(fileiraSelecionada, 2).toString());                
+                double totalCompra = Double.parseDouble(tabela.getValueAt(fileiraSelecionada, 3).toString());
+                VendasControle controle = new VendasControle();
+                boolean deletado = controle.removerVenda(cliente, produto, quantidade, totalCompra);
+                
+                if (deletado) {
+                    tabela.removeRow(fileiraSelecionada);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao deletar registro de venda."); 
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(TelaProdutos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+                JOptionPane.showMessageDialog(this, "Selecione uma fileira para deletar.");
+            }
+        //Comandos para limpar os campos apos realizar a ação 
+        limparCampos();
     }//GEN-LAST:event_botaoRemoverMouseClicked
 
     private void TabelaVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaVendasMouseClicked
@@ -225,6 +241,75 @@ public class TelaVendas extends javax.swing.JFrame {
         campoProdutoQuantidade.setText(model.getValueAt(fileiraSelecionada, 2).toString());
         campoTotalCompra.setText(model.getValueAt(fileiraSelecionada, 3).toString());
     }//GEN-LAST:event_TabelaVendasMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+        mostrarVenda();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaVendas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    public void limparCampos() {
+        campoProduto.setText(" ");
+        campoCliente.setText(" ");
+        campoTotalCompra.setText(" ");
+        campoProdutoQuantidade.setText(" ");
+    }
+    
+    public void mostrarVenda() throws SQLException {
+        
+        VendasControle controle = new VendasControle();
+        ArrayList<Venda> lista = controle.listaVendas();
+        DefaultTableModel tabelaProdutos = (DefaultTableModel)TabelaVendas.getModel();
+        Object [] fileira = new Object [4];
+        for (int i = 0; i<lista.size();i++) {
+            fileira[0] = lista.get(i).getCliente();
+            fileira[1] = lista.get(i).getProduto();
+            fileira[2] = lista.get(i).getQuantidade();
+            fileira[3] = lista.get(i).getTotalCompra();
+            tabelaProdutos.addRow(fileira);
+        }
+    }     
+    public JTable getTabelaVendas() {
+        return TabelaVendas;
+    }
+
+    public void setTabelaVendas(JTable TabelaVendas) {
+        this.TabelaVendas = TabelaVendas;
+    }
+
+    public JTextField getCampoCliente() {
+        return campoCliente;
+    }
+
+    public void setCampoCliente(JTextField campoCliente) {
+        this.campoCliente = campoCliente;
+    }
+
+    public JTextField getCampoProduto() {
+        return campoProduto;
+    }
+
+    public void setCampoProduto(JTextField campoProduto) {
+        this.campoProduto = campoProduto;
+    }
+
+    public JTextField getCampoProdutoQuantidade() {
+        return campoProdutoQuantidade;
+    }
+
+    public void setCampoProdutoQuantidade(JTextField campoProdutoQuantidade) {
+        this.campoProdutoQuantidade = campoProdutoQuantidade;
+    }
+
+    public JTextField getCampoTotalCompra() {
+        return campoTotalCompra;
+    }
+
+    public void setCampoTotalCompra(JTextField campoTotalCompra) {
+        this.campoTotalCompra = campoTotalCompra;
+    }
 
     /**
      * @param args the command line arguments

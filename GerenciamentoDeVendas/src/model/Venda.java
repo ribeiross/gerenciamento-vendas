@@ -5,15 +5,15 @@ public class Venda {
     private String produto;
     private int quantidade;
     private String cliente;
-    private double valorUnitario;
+    private double totalCompra;
     
     
    //CONSTRUTOR 
-   public Venda (String produto, int quantidade, String cliente, double valorUnitario) {
+   public Venda (String cliente, String produto, int quantidade, double totalCompra) {
+        this.cliente = cliente;
         this.produto = produto;
         this.quantidade = quantidade;
-        this.cliente = cliente;
-        this.valorUnitario = valorUnitario;
+        this.totalCompra = totalCompra;
     }
     
    //GETTERS E SETTERS
@@ -41,20 +41,12 @@ public class Venda {
         this.cliente = cliente;
     }
     
-    public double getValorUnitario() {
-        return valorUnitario;
+    public double getTotalCompra() {
+        return totalCompra;
     }
     
-    public void setValorUnitario(double valorUnitario) {
-        this.valorUnitario = valorUnitario;
+    public void setTotalCompra(double totalCompra) {
+        this.totalCompra = totalCompra;
     }
-    
-    public void exibirDetalhes() {
-        System.out.println("Produto: " + produto);
-        System.out.println("Quantidade: " + quantidade);
-        System.out.println("Cliente: " + cliente);
-        System.out.println("Valor unitário: " + valorUnitario);
-    }
-    
-   
+      
 }
