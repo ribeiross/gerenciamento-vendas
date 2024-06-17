@@ -85,7 +85,7 @@ public class ClientesControle {
         String telefone = tela.getCampoTelefone().getText();
         try {
             Connection conexao = new ConexaoDB().conectar();
-            String sql = "UPDATE clientes SET nome=?, endereco=?, telefone=?";
+            String sql = "UPDATE clientes SET nome=?, endereco=? WHERE telefone=?";
             PreparedStatement stmt = conexao.prepareStatement(sql);
             stmt.setString(1, nome);
             stmt.setString(2, endereco);

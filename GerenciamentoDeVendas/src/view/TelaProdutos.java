@@ -127,11 +127,11 @@ public class TelaProdutos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Produto", "Preço (R$) - Unidade", "Quantidade"
+                "Produto", "ID", "Preço (R$) - Unidade", "Quantidade"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Long.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.Long.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -222,12 +222,10 @@ public class TelaProdutos extends javax.swing.JFrame {
 
     private void botaoAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAtualizarMouseClicked
         int fileiraSelecionada  = TabelaProdutos.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel)TabelaProdutos.getModel();
+        DefaultTableModel tabela = (DefaultTableModel)TabelaProdutos.getModel();
         if (fileiraSelecionada >=0) {
-            model.setValueAt(campoProdutoNome.getText(), fileiraSelecionada, 0);
-            model.setValueAt(campoProdutoID.getText(), fileiraSelecionada, 1);
-            model.setValueAt(campoProdutoPreco.getText(), fileiraSelecionada, 2);
-            model.setValueAt(campoProdutoQuantidade.getText(), fileiraSelecionada, 3);
+            ProdutosControle controle = new ProdutosControle();
+            controle.atualizarProduto(this);
         } else {
             JOptionPane.showMessageDialog(null, "Algo de Errado aconteceu");
         }
@@ -285,8 +283,8 @@ public class TelaProdutos extends javax.swing.JFrame {
         DefaultTableModel tabelaProdutos = (DefaultTableModel)TabelaProdutos.getModel();
         Object [] fileira = new Object [4];
         for (int i = 0; i<lista.size();i++) {
-            fileira[0] = lista.get(i).getId();
-            fileira[1] = lista.get(i).getNome();
+            fileira[0] = lista.get(i).getNome();
+            fileira[1] = lista.get(i).getId();
             fileira[2] = lista.get(i).getPreco();
             fileira[3] = lista.get(i).getQuantidade();
             tabelaProdutos.addRow(fileira);

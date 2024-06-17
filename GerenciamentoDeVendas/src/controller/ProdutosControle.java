@@ -65,11 +65,11 @@ public class ProdutosControle {
         String produto = tela.getCampoProdutoNome().getText();
         double preco = Double.parseDouble(tela.getCampoProdutoPreco().getText());
         int quantidade = Integer.parseInt(tela.getCampoProdutoQuantidade().getText());
-        tabela.addRow(new Object[]{id, produto, preco, quantidade});
+        tabela.addRow(new Object[]{produto, id, preco, quantidade});
         try {        
         Connection conexao = new ConexaoDB().conectar();
 
-        String sql = "INSERT INTO produtos (id, produto, preco, quantidade) VALUES ('"+id+"','"+produto+"','"+preco+"','"+quantidade+"')";
+        String sql = "INSERT INTO produtos (produto, id, preco, quantidade) VALUES ('"+produto+"','"+id+"','"+preco+"','"+quantidade+"')";
         PreparedStatement stmt = conexao.prepareStatement(sql);
         stmt.executeUpdate();
         stmt.close();
@@ -88,15 +88,15 @@ public class ProdutosControle {
         int quantidade = Integer.parseInt(tela.getCampoProdutoQuantidade().getText());
         try {
             Connection conexao = new ConexaoDB().conectar();
-            String sql = "UPDATE produtos SET id=?, produto=?, preco=?, quantidade=?";
+            String sql = "UPDATE produtos SET produto=?, preco=?, quantidade=? WHERE id =?";
             PreparedStatement stmt = conexao.prepareStatement(sql);
-            stmt.setInt(1, id);
-            stmt.setString(2, produto);
-            stmt.setDouble(3,preco);
-            stmt.setInt(4,quantidade);
+            stmt.setString(1, produto);
+            stmt.setDouble(2,preco);
+            stmt.setInt(3,quantidade);
+            stmt.setInt(4, id);            
             stmt.executeUpdate();
-            tabela.setValueAt(id, fileiraSelecionada, 0);
-            tabela.setValueAt(produto, fileiraSelecionada, 1);
+            tabela.setValueAt(produto, fileiraSelecionada, 0);            
+            tabela.setValueAt(id, fileiraSelecionada, 1);
             tabela.setValueAt(preco, fileiraSelecionada, 2);
             tabela.setValueAt(quantidade, fileiraSelecionada, 3);
             stmt.close();
