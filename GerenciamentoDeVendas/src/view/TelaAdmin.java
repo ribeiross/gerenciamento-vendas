@@ -1,6 +1,10 @@
 
 package view;
 
+import controller.ConexaoDB;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 /**
  *
  * @author Ribeiro
@@ -31,6 +35,11 @@ public class TelaAdmin extends javax.swing.JFrame {
 
         botaoDesconectar.setContentAreaFilled(false);
         botaoDesconectar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoDesconectar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoDesconectarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoDesconectar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 660, 130, 20));
 
         botaoProdutos.setContentAreaFilled(false);
@@ -112,6 +121,23 @@ public class TelaAdmin extends javax.swing.JFrame {
         telaDeControleUsuario.setVisible(true);
         telaDeControleUsuario.toFront();
     }//GEN-LAST:event_botaoUsuariosMouseClicked
+
+    private void botaoDesconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDesconectarActionPerformed
+        ConexaoDB conexaoDB = new ConexaoDB();
+        Connection conexao = null;
+        try {
+            conexao = conexaoDB.conectar();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            conexaoDB.desconectar(conexao);
+            this.toBack();
+            setVisible(false);
+            TelaLogin telaDeLogin = new TelaLogin();
+            telaDeLogin.setVisible(true);
+            telaDeLogin.toFront();
+        }
+    }//GEN-LAST:event_botaoDesconectarActionPerformed
 
     /**
      * @param args the command line arguments

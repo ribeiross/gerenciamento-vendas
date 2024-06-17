@@ -12,4 +12,13 @@ public class ConexaoDB {
         return conexao;
     }
     
+    public void desconectar(Connection conexao) {
+        try {
+            if (conexao != null) {
+                conexao.close();
+            } 
+        }    catch (SQLException e) {
+                e.printStackTrace();    
+            }
+    }
 }
