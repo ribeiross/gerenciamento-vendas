@@ -9,17 +9,17 @@ public class Cliente {
     
     public String nomeCliente;
     private String clienteEndereco;
-    private long telefoneCliente;
+    private String telefone;
     
     //CONSTRUTORES
     public Cliente() {
         
     }
     
-    public Cliente(String nomeCliente, String clienteEndereco, long telefoneCliente) {
+    public Cliente(String nomeCliente, String clienteEndereco, String telefone) {
         this.nomeCliente = nomeCliente;
         this.clienteEndereco = clienteEndereco;
-        this.telefoneCliente = telefoneCliente;
+        this.telefone = telefone;
     }
     
     //GETTERS E SETTERS
@@ -39,12 +39,12 @@ public class Cliente {
         this.clienteEndereco = clienteEndereco;
     }
 
-    public long getTelefoneCliente() {
-        return telefoneCliente;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setTelefoneCliente(long telefoneCliente) {
-        this.telefoneCliente = telefoneCliente;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
     
     

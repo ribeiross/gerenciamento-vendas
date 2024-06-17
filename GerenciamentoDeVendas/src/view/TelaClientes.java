@@ -1,7 +1,15 @@
 package view;
 
+import controller.ClientesControle;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import model.Cliente;
 
 /**
  *
@@ -41,6 +49,11 @@ public class TelaClientes extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1533, 887));
         setResizable(false);
         setSize(new java.awt.Dimension(1280, 720));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoVoltar.setContentAreaFilled(false);
@@ -102,7 +115,7 @@ public class TelaClientes extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -116,6 +129,11 @@ public class TelaClientes extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(TabelaClientes);
+        if (TabelaClientes.getColumnModel().getColumnCount() > 0) {
+            TabelaClientes.getColumnModel().getColumn(0).setResizable(false);
+            TabelaClientes.getColumnModel().getColumn(1).setResizable(false);
+            TabelaClientes.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 420, 700, 300));
 
@@ -150,42 +168,55 @@ public class TelaClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoVoltarMouseClicked
 
     private void botaoAdicionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarMouseClicked
-            DefaultTableModel model = (DefaultTableModel)TabelaClientes.getModel();
-        model.addRow(new Object[]{campoClienteNome.getText(), campoEndereco.getText(),
-                                  campoTelefone.getText()});
-        //Comandos para limpar os campos apos realizar a ação (Alterar futuramente para tornar em um metodo
-        // presente em uma classe separada para tornar o codigo mais limpo) 
-        campoClienteNome.setText(" ");
-        campoEndereco.setText(" ");
-        campoTelefone.setText(" ");
+        if (campoClienteNome.getText() != "" || campoEndereco.getText() != "" || campoTelefone.getText() != "") {
+            ClientesControle controle = new ClientesControle();
+            controle.adicionarCliente(this);
+            //Comandos para limpar os campos apos realizar a ação 
+            limparCampos();
+        } else {
+            JOptionPane.showMessageDialog(null, "Preencha os campos!");
+        }    
     }//GEN-LAST:event_botaoAdicionarMouseClicked
 
     private void botaoAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAtualizarMouseClicked
         int fileiraSelecionada  = TabelaClientes.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel)TabelaClientes.getModel();
+        DefaultTableModel tabela = (DefaultTableModel)TabelaClientes.getModel();
         if (fileiraSelecionada >=0) {
-            model.setValueAt(campoClienteNome.getText(), fileiraSelecionada, 0);
-            model.setValueAt(campoEndereco.getText(), fileiraSelecionada, 1);
-            model.setValueAt(campoTelefone.getText(), fileiraSelecionada, 2);
+            ClientesControle controle = new ClientesControle();
+            controle.atualizarCliente(this);
+            
         } else {
-            JOptionPane.showMessageDialog(null, "Algo de Errado aconteceu");
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar cliente");
         }
-        //Comandos para limpar os campos apos realizar a ação (Alterar futuramente para tornar em um metodo
-        // presente em uma classe separada para tornar o codigo mais limpo) 
-        campoClienteNome.setText(" ");
-        campoEndereco.setText(" ");
-        campoTelefone.setText(" ");
+        //Comandos para limpar os campos apos realizar a ação 
+        limparCampos();
     }//GEN-LAST:event_botaoAtualizarMouseClicked
 
     private void botaoRemoverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoRemoverMouseClicked
-        int fileiraSelecionada  = TabelaClientes.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel)TabelaClientes.getModel();
-        model.removeRow(fileiraSelecionada);
-        //Comandos para limpar os campos apos realizar a ação (Alterar futuramente para tornar em um metodo
-        // presente em uma classe separada para tornar o codigo mais limpo) 
-        campoClienteNome.setText(" ");
-        campoEndereco.setText(" ");
-        campoTelefone.setText(" ");
+        //Remove a fileira de cliente da tabela e também o deleta ela do banco de dados)
+        int fileiraSelecionada = TabelaClientes.getSelectedRow();
+        if (fileiraSelecionada >= 0) {
+            try {
+                DefaultTableModel tabela = (DefaultTableModel) TabelaClientes.getModel();
+                String nome = tabela.getValueAt(fileiraSelecionada, 0).toString();
+                String endereco = tabela.getValueAt(fileiraSelecionada, 1).toString();
+                String telefone = tabela.getValueAt(fileiraSelecionada, 2).toString();
+                ClientesControle controle = new ClientesControle();
+                boolean deletado = controle.removerCliente(nome, endereco, telefone);
+                
+                if (deletado) {
+                    tabela.removeRow(fileiraSelecionada);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao deletar cliente."); 
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(TelaControleUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+                JOptionPane.showMessageDialog(this, "Selecione uma fileira para deletar.");
+            }
+        //Comandos para limpar os campos apos realizar a ação 
+        limparCampos();
     }//GEN-LAST:event_botaoRemoverMouseClicked
 
     private void TabelaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaClientesMouseClicked
@@ -196,6 +227,66 @@ public class TelaClientes extends javax.swing.JFrame {
         campoEndereco.setText(model.getValueAt(fileiraSelecionada, 1).toString());
         campoTelefone.setText(model.getValueAt(fileiraSelecionada, 2).toString());
     }//GEN-LAST:event_TabelaClientesMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+        mostrarCliente();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    public void limparCampos() {
+        campoClienteNome.setText(" ");
+        campoEndereco.setText(" ");
+        campoTelefone.setText(" ");
+    }
+    
+    public void mostrarCliente() throws SQLException {
+        
+        ClientesControle controle = new ClientesControle();
+        ArrayList<Cliente> lista = controle.listaClientes();
+        DefaultTableModel tabelaClientes = (DefaultTableModel)TabelaClientes.getModel();
+        Object [] fileira = new Object [3];
+        for (int i = 0; i<lista.size();i++) {
+            fileira[0] = lista.get(i).getNomeCliente();
+            fileira[1] = lista.get(i).getClienteEndereco();
+            fileira[2] = lista.get(i).getTelefone();
+            tabelaClientes.addRow(fileira);
+        }
+        
+    }
+    public JTable getTabelaClientes() {
+        return TabelaClientes;
+    }
+
+    public void setTabelaClientes(JTable TabelaClientes) {
+        this.TabelaClientes = TabelaClientes;
+    }
+
+    public JTextField getCampoClienteNome() {
+        return campoClienteNome;
+    }
+
+    public void setCampoClienteNome(JTextField campoClienteNome) {
+        this.campoClienteNome = campoClienteNome;
+    }
+
+    public JTextField getCampoEndereco() {
+        return campoEndereco;
+    }
+
+    public void setCampoEndereco(JTextField campoEndereco) {
+        this.campoEndereco = campoEndereco;
+    }
+
+    public JTextField getCampoTelefone() {
+        return campoTelefone;
+    }
+
+    public void setCampoTelefone(JTextField campoTelefone) {
+        this.campoTelefone = campoTelefone;
+    }
 
     /**
      * @param args the command line arguments

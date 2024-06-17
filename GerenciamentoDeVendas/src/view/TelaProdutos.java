@@ -1,8 +1,16 @@
 
 package view;
 
+import controller.ProdutosControle;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import model.Produto;
 
 
 /**
@@ -44,6 +52,11 @@ public class TelaProdutos extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1533, 887));
         setResizable(false);
         setSize(new java.awt.Dimension(1280, 720));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoVoltar.setContentAreaFilled(false);
@@ -114,9 +127,17 @@ public class TelaProdutos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Produto", "ID", "Preço (R$)", "Quantidade"
+                "ID", "Produto", "Preço (R$) - Unidade", "Quantidade"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Long.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         TabelaProdutos.getTableHeader().setReorderingAllowed(false);
         TabelaProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -124,6 +145,12 @@ public class TelaProdutos extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(TabelaProdutos);
+        if (TabelaProdutos.getColumnModel().getColumnCount() > 0) {
+            TabelaProdutos.getColumnModel().getColumn(0).setResizable(false);
+            TabelaProdutos.getColumnModel().getColumn(1).setResizable(false);
+            TabelaProdutos.getColumnModel().getColumn(2).setResizable(false);
+            TabelaProdutos.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 420, 700, 300));
 
@@ -162,16 +189,14 @@ public class TelaProdutos extends javax.swing.JFrame {
     }//GEN-LAST:event_campoProdutoPrecoKeyTyped
 
     private void botaoAdicionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarMouseClicked
-        //Metodo para adicionar as informações presentes nos JtextField a tabela de Produtos
-        DefaultTableModel model = (DefaultTableModel)TabelaProdutos.getModel();
-        model.addRow(new Object[]{campoProdutoNome.getText(), campoProdutoID.getText(),
-                                  campoProdutoPreco.getText(), campoProdutoQuantidade.getText()});
-        //Comandos para limpar os campos apos adicionar um produto (Alterar futuramente para tornar em um metodo
-        // presente em uma classe separada para tornar o codigo mais limpo)
-        campoProdutoNome.setText(" ");
-        campoProdutoID.setText(" ");
-        campoProdutoPreco.setText(" ");
-        campoProdutoQuantidade.setText(" ");
+        if (campoProdutoID.getText() != "" || campoProdutoNome.getText() != "" || campoProdutoPreco.getText() != "" || campoProdutoQuantidade.getText() != "") {
+            ProdutosControle controle = new ProdutosControle();
+            controle.adicionarProduto(this);
+            //Comandos para limpar os campos apos realizar a ação 
+            limparCampos();
+        } else {
+            JOptionPane.showMessageDialog(null, "Preencha os campos!");
+        }
     }//GEN-LAST:event_botaoAdicionarMouseClicked
 
     private void botaoVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVoltarMouseClicked
@@ -206,26 +231,107 @@ public class TelaProdutos extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Algo de Errado aconteceu");
         }
-        //Comandos para limpar os campos apos adicionar um produto (Alterar futuramente para tornar em um metodo
-        // presente em uma classe separada para tornar o codigo mais limpo)        
-        campoProdutoNome.setText(" ");
-        campoProdutoID.setText(" ");
-        campoProdutoPreco.setText(" ");
-        campoProdutoQuantidade.setText(" ");
+        //Comandos para limpar os campos apos realizar a ação 
+        limparCampos();
     }//GEN-LAST:event_botaoAtualizarMouseClicked
 
     private void botaoRemoverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoRemoverMouseClicked
-        //Metodo para remover a fileira selecionada da tabela
+        //Remove a fileira de produto da tabela e também o deleta ela do banco de dados)
         int fileiraSelecionada = TabelaProdutos.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel)TabelaProdutos.getModel();
-        model.removeRow(fileiraSelecionada);
-        //Comandos para limpar os campos apos adicionar um produto (Alterar futuramente para tornar em um metodo
-        // presente em uma classe separada para tornar o codigo mais limpo)
+        if (fileiraSelecionada >= 0) {
+            try {
+                DefaultTableModel tabela = (DefaultTableModel) TabelaProdutos.getModel();
+                int id = Integer.parseInt(tabela.getValueAt(fileiraSelecionada, 0).toString());
+                String nome = tabela.getValueAt(fileiraSelecionada, 1).toString();
+                double preco = Double.parseDouble(tabela.getValueAt(fileiraSelecionada, 2).toString());
+                int quantidade = Integer.parseInt(tabela.getValueAt(fileiraSelecionada, 3).toString());
+                ProdutosControle controle = new ProdutosControle();
+                boolean deletado = controle.removerProduto(id, nome, preco, quantidade);
+                
+                if (deletado) {
+                    tabela.removeRow(fileiraSelecionada);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao deletar produto."); 
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(TelaProdutos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+                JOptionPane.showMessageDialog(this, "Selecione uma fileira para deletar.");
+            }
+        //Comandos para limpar os campos apos realizar a ação 
+        limparCampos();
+    }//GEN-LAST:event_botaoRemoverMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+        mostrarProduto();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaProdutos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+    
+    public void limparCampos() {
         campoProdutoNome.setText(" ");
         campoProdutoID.setText(" ");
         campoProdutoPreco.setText(" ");
         campoProdutoQuantidade.setText(" ");
-    }//GEN-LAST:event_botaoRemoverMouseClicked
+    }
+    
+    public void mostrarProduto() throws SQLException {
+        
+        ProdutosControle controle = new ProdutosControle();
+        ArrayList<Produto> lista = controle.listaProdutos();
+        DefaultTableModel tabelaProdutos = (DefaultTableModel)TabelaProdutos.getModel();
+        Object [] fileira = new Object [4];
+        for (int i = 0; i<lista.size();i++) {
+            fileira[0] = lista.get(i).getId();
+            fileira[1] = lista.get(i).getNome();
+            fileira[2] = lista.get(i).getPreco();
+            fileira[3] = lista.get(i).getQuantidade();
+            tabelaProdutos.addRow(fileira);
+        }
+    }    
+    
+    public JTable getTabelaProdutos() {
+        return TabelaProdutos;
+    }
+
+    public void setTabelaProdutos(JTable TabelaProdutos) {
+        this.TabelaProdutos = TabelaProdutos;
+    }
+
+    public JTextField getCampoProdutoID() {
+        return campoProdutoID;
+    }
+
+    public void setCampoProdutoID(JTextField campoProdutoID) {
+        this.campoProdutoID = campoProdutoID;
+    }
+
+    public JTextField getCampoProdutoNome() {
+        return campoProdutoNome;
+    }
+
+    public void setCampoProdutoNome(JTextField campoProdutoNome) {
+        this.campoProdutoNome = campoProdutoNome;
+    }
+
+    public JTextField getCampoProdutoPreco() {
+        return campoProdutoPreco;
+    }
+
+    public void setCampoProdutoPreco(JTextField campoProdutoPreco) {
+        this.campoProdutoPreco = campoProdutoPreco;
+    }
+
+    public JTextField getCampoProdutoQuantidade() {
+        return campoProdutoQuantidade;
+    }
+
+    public void setCampoProdutoQuantidade(JTextField campoProdutoQuantidade) {
+        this.campoProdutoQuantidade = campoProdutoQuantidade;
+    }
 
     /**
      * @param args the command line arguments
