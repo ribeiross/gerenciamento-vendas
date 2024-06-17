@@ -31,17 +31,17 @@ public class ProdutosControle {
         return listaProdutos;
     }
     
-    public boolean removerProduto(int id, String nome, double preco, int quantidade) throws SQLException {
+    public boolean removerProduto(String nome, int id, double preco, int quantidade) throws SQLException {
         
         PreparedStatement stmt = null;
         boolean deletadoSucesso = false;
         
         try {
         Connection conexao = new ConexaoDB().conectar();
-        String sql = "DELETE FROM produtos WHERE id = ? AND produto = ? AND preco = ? AND quantidade = ?";
+        String sql = "DELETE FROM produtos WHERE produto = ? AND id = ? AND preco = ? AND quantidade = ?";
         stmt = conexao.prepareStatement(sql);
-        stmt.setInt(1, id);
-        stmt.setString(2, nome);
+        stmt.setString(1, nome);
+        stmt.setInt(2, id);
         stmt.setDouble(3,preco);
         stmt.setInt(4,quantidade);
         int fileirasAfetadas = stmt.executeUpdate();

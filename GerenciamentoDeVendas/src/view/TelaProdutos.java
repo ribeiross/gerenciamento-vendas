@@ -239,12 +239,12 @@ public class TelaProdutos extends javax.swing.JFrame {
         if (fileiraSelecionada >= 0) {
             try {
                 DefaultTableModel tabela = (DefaultTableModel) TabelaProdutos.getModel();
-                int id = Integer.parseInt(tabela.getValueAt(fileiraSelecionada, 0).toString());
-                String nome = tabela.getValueAt(fileiraSelecionada, 1).toString();
+                String nome = tabela.getValueAt(fileiraSelecionada, 0).toString();
+                int id = Integer.parseInt(tabela.getValueAt(fileiraSelecionada, 1).toString());                
                 double preco = Double.parseDouble(tabela.getValueAt(fileiraSelecionada, 2).toString());
                 int quantidade = Integer.parseInt(tabela.getValueAt(fileiraSelecionada, 3).toString());
                 ProdutosControle controle = new ProdutosControle();
-                boolean deletado = controle.removerProduto(id, nome, preco, quantidade);
+                boolean deletado = controle.removerProduto(nome, id, preco, quantidade);
                 
                 if (deletado) {
                     tabela.removeRow(fileiraSelecionada);
